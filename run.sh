@@ -19,6 +19,6 @@ docker-compose up --build -d nginx
 
 # Pause here until http://worldpeace.cloud response code is 200
 RESPONSE_CODE=domain_response_code
-while [ $RESPONSE_CODE != "200" ]; do
+while [[ $RESPONSE_CODE != "200" ]]; do
     RESPONSE_CODE=domain_response_code
 done
