@@ -1,0 +1,19 @@
+services:
+  webserver:
+    image: nginx
+    ports:
+      - 80:80
+      # - 443:443
+    volumes:
+      - ./acme-challenge.conf:/etc/nginx/conf.d/acme-challenge.conf
+      - certbot_www:/var/www/certbot
+      - certbot_conf:/etc/nginx/ssl
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - certbot_www:/var/www/certbot
+      - certbot_conf:/etc/letsencrypt
+
+volumes:
+  certbot_www:
+  certbot_conf:
