@@ -17,13 +17,18 @@ services:
             - "443:443"
 
 volumes:
-    certbot_etc:
     certbot_var:
+    certbot_etc:
+        driver: local
+        driver_opts:
+            type: none
+            device: ${VOLUME_CERTBOT_ETC}
+            o: bind
     html:
         driver: local
         driver_opts:
             type: none
-            device: ${VOLUME_WEB_ROOT}
+            device: ${VOLUME_HTML}
             o: bind
     dhparam:
         driver: local
