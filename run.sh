@@ -5,6 +5,11 @@ function domain_response_code () {
         --write-out '%{http_code}' -s -S http://worldpeace.cloud)"
 }
 
+function certbot_ends_well () {
+    docker-compose ps | grep certbot | grep -o "exited (0)"
+    echo $?
+}
+
 docker-compose down
 
 if [[ $CERTBOT_DOCKER_PRUNE == "1" ]]
@@ -23,9 +28,14 @@ then
     exit 1
 fi
 
-# pause here untill http://worldpeace.cloud responses with 200
+# pause here until http://worldpeace.cloud responses with 200
 until [[ $(domain_response_code) -eq 200 ]]; do
     sleep 2
 done
 
 docker-compose up --build -d certbot
+
+# pause here until certbot ends well
+until [[ certbot_exit_code -eq 0 ]]; do
+    sleep 2
+done
