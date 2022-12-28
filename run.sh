@@ -28,6 +28,4 @@ until [[ $(domain_response_code) -eq 200 ]]; do
     sleep 2
 done
 
-docker-compose up --build -d certbot
-
-docker-compose --exit-code-from certbot
+docker-compose up --build -d --exit-code-from certbot
