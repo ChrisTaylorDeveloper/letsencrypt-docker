@@ -29,6 +29,7 @@ fi
 # exit if docker-compose didn't end well
 if ! docker-compose up --build -d nginx;
 then
+    echo "nginx service failed"
     exit 1
 fi
 
@@ -37,9 +38,13 @@ until [[ $(domain_response_code) -eq 200 ]]; do
     sleep 2
 done
 
-docker-compose up --build -d certbot
+if ! docker-compose up --build -d certbot;
+then
+    echo "certbot service failed"
+    exit 1
+fi
 
 # pause here until certbot ends well
-until [[ $(certbot_exit_code) -eq 0 ]]; do
-    sleep 2
-done
+# until [[ $(certbot_exit_code) -eq 0 ]]; do
+#     sleep 2
+# done
