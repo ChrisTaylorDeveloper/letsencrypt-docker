@@ -6,7 +6,7 @@ function domain_response_code () {
 }
 
 function certbot_exit_code () {
-    docker-compose ps | grep certbot | grep -o "exited (0)"
+    docker-compose ps | grep certbot | grep -o 'exited (0)'
     echo $?
 }
 
