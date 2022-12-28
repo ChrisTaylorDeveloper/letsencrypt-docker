@@ -5,7 +5,7 @@ function domain_response_code () {
         --write-out '%{http_code}' -s -S http://worldpeace.cloud)"
 }
 
-function certbot_ends_well () {
+function certbot_exit_code () {
     docker-compose ps | grep certbot | grep -o "exited (0)"
     echo $?
 }
