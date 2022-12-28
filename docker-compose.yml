@@ -2,24 +2,24 @@ services:
     certbot:
         image: certbot/certbot
         volumes:
-            - certbot-etc:/etc/letsencrypt
-            - certbot-var:/var/lib/letsencrypt
-            - web-root:/var/www/html
+            - certbot_etc:/etc/letsencrypt
+            - certbot_var:/var/lib/letsencrypt
+            - html:/var/www/html
             - dhparam:/etc/ssl/certs
         command: certonly --webroot --webroot-path=/var/www/html --email ${SECURE_DOMAIN_EMAIL} --agree-tos --no-eff-email --force-renewal -d ${SECURE_DOMAIN} ${CERTBOT_STAGING}
     nginx:
         image: nginx:1.23.3
         volumes:
-            - web-root:/usr/share/nginx/html
+            - html:/usr/share/nginx/html
             - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
         ports:
             - "80:80"
             - "443:443"
 
 volumes:
-    certbot-etc:
-    certbot-var:
-    web-root:
+    certbot_etc:
+    certbot_var:
+    html:
         driver: local
         driver_opts:
             type: none

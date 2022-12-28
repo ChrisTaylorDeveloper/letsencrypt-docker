@@ -1,24 +1,31 @@
-#!/bin/bash
+#!/bin/bash -xv
 
-domain_response_code () {
-    echo "in domain_response_code"
-    CODE="$(curl --output /dev/null --connect-timeout 5 --max-time 20 --write-out '%{http_code}' -s -S http://worldpeace.cloud)"
-    echo "$CODE"
-    return "$CODE"
+function domain_response_code () {
+    echo "$(curl --output /dev/null --connect-timeout 5 --max-time 10 \
+        --write-out '%{http_code}' -s -S http://worldpeace.cloud)"
 }
 
 docker-compose down
 
-if [[ $RESET_HARD == "1" ]]
+if [[ $CERTBOT_DOCKER_PRUNE == "1" ]]
 then
     docker system prune -a --force
-    docker volume rm "$(docker volume ls -q)"
 fi
 
-docker-compose up --build -d nginx
+if [[ $CERTBOT_DOCKER_VOLS_REMOVE == "1" ]]
+then
+    docker volume rm $(docker volume ls -q)
+fi
 
-# Pause here until http://worldpeace.cloud response code is 200
-RESPONSE_CODE=domain_response_code
-while [[ $RESPONSE_CODE != "200" ]]; do
-    RESPONSE_CODE=domain_response_code
+# exit if docker-compose didn't end well
+if ! docker-compose up --build -d nginx;
+then
+    exit 1
+fi
+
+# pause here untill http://worldpeace.cloud responses with 200
+until [[ $(domain_response_code) -eq 200 ]]; do
+    sleep 2
 done
+
+docker-compose up --build -d certbot
