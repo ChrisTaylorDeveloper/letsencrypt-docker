@@ -29,3 +29,5 @@ until [[ $(domain_response_code) -eq 200 ]]; do
 done
 
 docker-compose up --build -d certbot
+
+docker-compose --exit-code-from certbot
