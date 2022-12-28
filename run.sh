@@ -36,6 +36,6 @@ done
 docker-compose up --build -d certbot
 
 # pause here until certbot ends well
-until [[ certbot_exit_code -eq 0 ]]; do
+until [[ $(certbot_exit_code) -eq 0 ]]; do
     sleep 2
 done
