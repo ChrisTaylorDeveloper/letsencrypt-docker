@@ -7,6 +7,7 @@ function domain_response_code () {
 
 function certbot_exit_code () {
     if [[ $(docker-compose ps | grep certbot | grep -o 'exited (0)') == "exited (0)" ]]
+    then
         echo 0
     fi
     echo 1
