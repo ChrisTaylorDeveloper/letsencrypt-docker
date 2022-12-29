@@ -5,14 +5,14 @@ function domain_response_code () {
         --write-out '%{http_code}' -s -S http://worldpeace.cloud)"
 }
 
-function certbot_exit_code () {
-    if [[ $(docker-compose ps | grep certbot | grep -o 'exited (0)') == "exited (0)" ]]
-    then
-        echo 0
-    else
-        echo 1
-    fi
-}
+# function certbot_exit_code () {
+#     if [[ $(docker-compose ps | grep certbot | grep -o 'exited (0)') == "exited (0)" ]]
+#     then
+#         echo 0
+#     else
+#         echo 1
+#     fi
+# }
 
 docker-compose down
 
@@ -48,3 +48,6 @@ fi
 # until [[ $(certbot_exit_code) -eq 0 ]]; do
 #     sleep 2
 # done
+
+# letsencrypt-docker-certbot-1  | Certificate is saved at: /etc/letsencrypt/live/worldpeace.cloud/fullchain.pem
+# letsencrypt-docker-certbot-1  | Key is saved at:         /etc/letsencrypt/live/worldpeace.cloud/privkey.pem
