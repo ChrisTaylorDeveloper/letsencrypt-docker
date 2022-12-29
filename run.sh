@@ -33,18 +33,18 @@ then
     exit 1
 fi
 
-# pause here until http://worldpeace.cloud responses with 200
-# until [[ $(domain_response_code) -eq 200 ]]; do
-#     sleep 2
-# done
+pause here until http://worldpeace.cloud responses with 200
+until [[ $(domain_response_code) -eq 200 ]]; do
+    sleep 2
+done
 
-# if ! docker-compose up --build -d certbot;
-# then
-#     echo "certbot service failed"
-#     exit 1
-# fi
+if ! docker-compose up --build -d certbot;
+then
+    echo "certbot service failed"
+    exit 1
+fi
 
-# rm ./nginx_conf/nginx.conf
-# mv ./nginx-https.conf ./nginx_conf/nginx.conf
+rm ./nginx_conf/nginx.conf
+cp ./nginx-https.conf ./nginx_conf/nginx.conf
 
-# docker-compose restart nginx
+docker-compose restart nginx
