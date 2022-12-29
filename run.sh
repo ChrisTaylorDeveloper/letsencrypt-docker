@@ -46,3 +46,5 @@ fi
 
 rm ./nginx_conf/nginx.conf
 mv ./nginx-https.conf ./nginx_conf/nginx.conf
+
+docker-compose restart nginx
