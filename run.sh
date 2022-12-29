@@ -44,10 +44,5 @@ then
     exit 1
 fi
 
-# pause here until certbot ends well
-# until [[ $(certbot_exit_code) -eq 0 ]]; do
-#     sleep 2
-# done
-
-# letsencrypt-docker-certbot-1  | Certificate is saved at: /etc/letsencrypt/live/worldpeace.cloud/fullchain.pem
-# letsencrypt-docker-certbot-1  | Key is saved at:         /etc/letsencrypt/live/worldpeace.cloud/privkey.pem
+rm ./nginx_conf/nginx.conf
+mv ./nginx-https.conf ./nginx_conf/nginx.conf
