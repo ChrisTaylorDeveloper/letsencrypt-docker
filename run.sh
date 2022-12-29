@@ -23,7 +23,7 @@ fi
 
 if [[ $CERTBOT_DOCKER_VOLS_REMOVE == "1" ]]
 then
-    docker volume rm "$(docker volume ls -q)"
+    docker volume rm $(docker volume ls -q)
 fi
 
 # exit if docker-compose didn't end well
