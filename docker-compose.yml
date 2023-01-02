@@ -10,8 +10,8 @@ services:
     nginx:
         image: nginx:1.23.3
         volumes:
-            - certbot-etc:/etc/letsencrypt
-            - certbot-var:/var/lib/letsencrypt
+            - certbot_etc:/etc/letsencrypt
+            - certbot_var:/var/lib/letsencrypt
             - html:/usr/share/nginx/html
             - ./nginx_conf:/etc/nginx/conf.d
         ports:
