@@ -31,9 +31,9 @@ then
 fi
 
 # Pause here until http://worldpeace.cloud responses with 200.
-# until [[ $(domain_response_code) -eq 200 ]]; do
-#     sleep 2
-# done
+until [[ $(domain_response_code) -eq 200 ]]; do
+    sleep 2
+done
 
 # Run certbot and exit if there was a problem.
 # if ! docker-compose up --build -d certbot;
