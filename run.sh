@@ -9,7 +9,7 @@ function domain_response_code () {
 docker-compose down
 
 # Clean up after previous runs 
-echo $1 | sudo git clean -fd
+echo $1 | sudo -S git clean -fd
 # rm -rf ${VOLUME_CERTBOT_ETC}
 # mkdir ${VOLUME_CERTBOT_ETC}
 
