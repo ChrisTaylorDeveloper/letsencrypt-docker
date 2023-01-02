@@ -24,7 +24,7 @@ then
 fi
 
 # Run nginx for the first time and exit if there was a problem.
-if ! docker-compose up --build -d nginx;
+if ! $(docker-compose up --build -d nginx);
 then
     echo "nginx service failed"
     exit 1
