@@ -47,4 +47,4 @@ rm ./nginx_conf/nginx.conf
 cp ./nginx-https.conf ./nginx_conf/nginx.conf
 
 # Restart nginx using the https conf. 
-docker-compose restart nginx
+# docker-compose restart nginx
