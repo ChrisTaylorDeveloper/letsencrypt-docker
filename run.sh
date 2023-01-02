@@ -5,15 +5,6 @@ function domain_response_code () {
         --write-out '%{http_code}' -s -S http://worldpeace.cloud)"
 }
 
-# function certbot_exit_code () {
-#     if [[ $(docker-compose ps | grep certbot | grep -o 'exited (0)') == "exited (0)" ]]
-#     then
-#         echo 0
-#     else
-#         echo 1
-#     fi
-# }
-
 # Start with all Docker containers shutdown.
 docker-compose down
 
@@ -39,20 +30,20 @@ then
 fi
 
 # Pause here until http://worldpeace.cloud responses with 200.
-until [[ $(domain_response_code) -eq 200 ]]; do
-    sleep 2
-done
+# until [[ $(domain_response_code) -eq 200 ]]; do
+#     sleep 2
+# done
 
 # Run certbot and exit if there was a problem.
-if ! docker-compose up --build -d certbot;
-then
-    echo "certbot service failed"
-    exit 1
-fi
+# if ! docker-compose up --build -d certbot;
+# then
+#     echo "certbot service failed"
+#     exit 1
+# fi
 
 # Swap over the basic nginx conf for the https version.
-rm ./nginx_conf/nginx.conf
-cp ./nginx-https.conf ./nginx_conf/nginx.conf
+# rm ./nginx_conf/nginx.conf
+# cp ./nginx-https.conf ./nginx_conf/nginx.conf
 
 # Restart nginx using the https conf. 
-docker-compose restart nginx
+# docker-compose restart nginx
