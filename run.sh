@@ -10,8 +10,8 @@ docker-compose down
 
 # Clean up after previous runs 
 echo $1 | sudo -S git clean -fd
-# rm -rf ${VOLUME_CERTBOT_ETC}
-# mkdir ${VOLUME_CERTBOT_ETC}
+git checkout -- .
+mkdir ${VOLUME_CERTBOT_ETC}
 
 # Setting these variables with prune Docker and delete all Volumes. 
 if [[ $CERTBOT_DOCKER_PRUNE == "1" ]]
