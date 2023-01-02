@@ -36,11 +36,11 @@ until [[ $(domain_response_code) -eq 200 ]]; do
 done
 
 # Run certbot and exit if there was a problem.
-# if ! docker-compose up --build -d certbot;
-# then
-#     echo "certbot service failed"
-#     exit 1
-# fi
+if ! docker-compose up --build -d certbot;
+then
+    echo "certbot service failed"
+    exit 1
+fi
 
 # Swap over the basic nginx conf for the https version.
 # rm ./nginx_conf/nginx.conf
