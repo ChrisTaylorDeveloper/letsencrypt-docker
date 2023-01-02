@@ -9,8 +9,9 @@ function domain_response_code () {
 docker-compose down
 
 # Clean up after previous runs 
-rm -rf ${VOLUME_CERTBOT_ETC}
-mkdir ${VOLUME_CERTBOT_ETC}
+echo $1 | sudo git clean -fd
+# rm -rf ${VOLUME_CERTBOT_ETC}
+# mkdir ${VOLUME_CERTBOT_ETC}
 
 # Setting these variables with prune Docker and delete all Volumes. 
 if [[ $CERTBOT_DOCKER_PRUNE == "1" ]]
