@@ -5,6 +5,17 @@ function domain_response_code () {
         --write-out '%{http_code}' -s -S http://worldpeace.cloud)"
 }
 
+function nginx_up () {
+    docker run --name nginx -d \
+        -p "80:80" \
+        -p "443:443" \
+        -v certbot_etc:/etc/letsencrypt \
+        -v certbot_var:/var/lib/letsencrypt \
+        -v html:/usr/share/nginx/html \
+        -v /home/dock/letsencrypt-docker/nginx_conf:/etc/nginx/conf.d \
+        nginx:1.23.3
+}
+
 # Cleanup Docker.
 docker stop "$(docker ps -aq)"
 docker rm "$(docker ps -aq)"
@@ -43,14 +54,7 @@ docker volume create \
     dhparam 
 
 # Run nginx for the first time.
-nginx_cont=$(docker run --name nginx -d \
-    -p "80:80" \
-    -p "443:443" \
-    -v certbot_etc:/etc/letsencrypt \
-    -v certbot_var:/var/lib/letsencrypt \
-    -v html:/usr/share/nginx/html \
-    -v /home/dock/letsencrypt-docker/nginx_conf:/etc/nginx/conf.d \
-    nginx:1.23.3)
+nginx_cont=$(nginx_up)
 nginx_status=$(docker inspect "${nginx_cont}" --format='{{.State.ExitCode}}')
 if [[ "${nginx_status}" -ne 0 ]];
 then
