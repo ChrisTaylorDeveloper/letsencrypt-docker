@@ -49,19 +49,17 @@ docker volume create \
 #     echo "nginx service failed"
 #     exit 1
 # fi
-nginx_status = $(docker run --name nginx -d \
+docker run --name nginx -d \
     -v certbot_etc:/etc/letsencrypt \
     -v certbot_var:/var/lib/letsencrypt \
     -v html:/usr/share/nginx/html \
     -v /home/dock/letsencrypt-docker/nginx_conf:/etc/nginx/conf.d \
-    nginx:1.23.3)
-
-echo ${nginx_status}
+    nginx:1.23.3
 
 # Pause here until http://worldpeace.cloud responses with 200.
-# until [[ $(domain_response_code) -eq 200 ]]; do
-#     sleep 2
-# done
+until [[ $(domain_response_code) -eq 200 ]]; do
+    sleep 2
+done
 
 # Run certbot and exit if there was a problem.
 # if ! $(docker-compose up --build -d certbot);
