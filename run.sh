@@ -43,7 +43,7 @@ docker volume create \
     dhparam 
 
 # Run nginx for the first time.
-nginx_status=$(docker run --name nginx -d \
+nginx_cont=$(docker run --name nginx -d \
     -p "80:80" \
     -p "443:443" \
     -v certbot_etc:/etc/letsencrypt \
@@ -52,31 +52,34 @@ nginx_status=$(docker run --name nginx -d \
     -v /home/dock/letsencrypt-docker/nginx_conf:/etc/nginx/conf.d \
     nginx:1.23.3; echo $?)
 
-if ${nginx_status} != 0;
-then
-    echo "nginx service failed"
-    exit 1
-fi
+nginx_status=$(docker inspect ${nginx_cont} --format='{{.State.ExitCode}}')
+echo nginx_status
+
+# if ${nginx_status} != 0;
+# then
+#     echo "nginx service failed"
+#     exit 1
+# fi
 
 # Pause here until http://worldpeace.cloud responses with 200.
-until [[ $(domain_response_code) -eq 200 ]]; do
-    sleep 2
-done
+# until [[ $(domain_response_code) -eq 200 ]]; do
+#     sleep 2
+# done
 
 # Run certbot service for the first time.
-certbot_status=$(docker run --name certbot -d \
-    -v certbot_etc:/etc/letsencrypt \
-    -v certbot_var:/var/lib/letsencrypt \
-    -v html:/var/www/html \
-    -v dhparam:/etc/ssl/certs \
-    certbot/certbot \
-    certonly --webroot --webroot-path=/var/www/html --email chris@christaylordeveloper.co.uk --agree-tos --no-eff-email --force-renewal -d worldpeace.cloud --staging --break-my-certs; echo $?)
+# certbot_status=$(docker run --name certbot -d \
+#     -v certbot_etc:/etc/letsencrypt \
+#     -v certbot_var:/var/lib/letsencrypt \
+#     -v html:/var/www/html \
+#     -v dhparam:/etc/ssl/certs \
+#     certbot/certbot \
+#     certonly --webroot --webroot-path=/var/www/html --email chris@christaylordeveloper.co.uk --agree-tos --no-eff-email --force-renewal -d worldpeace.cloud --staging --break-my-certs; echo $?)
 
-if ${certbot_status} != 0;
-then
-    echo "certbot service failed"
-    exit 1
-fi
+# if ${certbot_status} != 0;
+# then
+#     echo "certbot service failed"
+#     exit 1
+# fi
 
 # Should probably stop nginx here
 
