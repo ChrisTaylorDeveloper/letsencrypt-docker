@@ -43,7 +43,7 @@ docker volume create \
     dhparam 
 
 # Run nginx for the first time.
-nginx_status = $(docker run --name nginx -d \
+nginx_status=$(docker run --name nginx -d \
     -p "80:80" \
     -p "443:443" \
     -v certbot_etc:/etc/letsencrypt \
@@ -52,9 +52,7 @@ nginx_status = $(docker run --name nginx -d \
     -v /home/dock/letsencrypt-docker/nginx_conf:/etc/nginx/conf.d \
     nginx:1.23.3; echo $?)
 
-echo ${nginx_status}
-
-if ${nginx_status};
+if ${nginx_status} != 0;
 then
     echo "nginx service failed"
     exit 1
@@ -65,20 +63,20 @@ until [[ $(domain_response_code) -eq 200 ]]; do
     sleep 2
 done
 
-docker run --name certbot -d \
+# Run certbot service for the first time.
+certbot_status=$(docker run --name certbot -d \
     -v certbot_etc:/etc/letsencrypt \
     -v certbot_var:/var/lib/letsencrypt \
     -v html:/var/www/html \
     -v dhparam:/etc/ssl/certs \
     certbot/certbot \
-    certonly --webroot --webroot-path=/var/www/html --email chris@christaylordeveloper.co.uk --agree-tos --no-eff-email --force-renewal -d worldpeace.cloud --staging --break-my-certs
+    certonly --webroot --webroot-path=/var/www/html --email chris@christaylordeveloper.co.uk --agree-tos --no-eff-email --force-renewal -d worldpeace.cloud --staging --break-my-certs; echo $?)
 
-# Run certbot and exit if there was a problem.
-# if ! $(docker-compose up --build -d certbot);
-# then
-#     echo "certbot service failed"
-#     exit 1
-# fi
+if ${certbot_status} != 0;
+then
+    echo "certbot service failed"
+    exit 1
+fi
 
 # Should probably stop nginx here
 
