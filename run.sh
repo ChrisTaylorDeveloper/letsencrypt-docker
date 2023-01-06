@@ -57,6 +57,14 @@ until [[ $(domain_response_code) -eq 200 ]]; do
     sleep 2
 done
 
+docker run --name certbot -d \
+    -v certbot_etc:/etc/letsencrypt \
+    -v certbot_var:/var/lib/letsencrypt \
+    -v html:/var/www/html \
+    -v dhparam:/etc/ssl/certs \
+    certbot\certbot \
+    certonly --webroot --webroot-path=/var/www/html --email chris@christaylordeveloper.co.uk --agree-tos --no-eff-email --force-renewal -d worldpeace.cloud --staging --break-my-certs
+
 # Run certbot and exit if there was a problem.
 # if ! $(docker-compose up --build -d certbot);
 # then
