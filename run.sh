@@ -50,7 +50,7 @@ nginx_cont=$(docker run --name nginx -d \
     -v certbot_var:/var/lib/letsencrypt \
     -v html:/usr/share/nginx/html \
     -v /home/dock/letsencrypt-docker/nginx_conf:/etc/nginx/conf.d \
-    nginx:1.23.3; echo $?)
+    nginx:1.23.3)
 
 nginx_status=$(docker inspect ${nginx_cont} --format='{{.State.ExitCode}}')
 echo ${nginx_status}
