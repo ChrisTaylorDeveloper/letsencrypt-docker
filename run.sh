@@ -43,14 +43,22 @@ docker volume create \
     dhparam 
 
 # Run nginx for the first time.
-docker run --name nginx -d \
+nginx_status = $(docker run --name nginx -d \
     -p "80:80" \
     -p "443:443" \
     -v certbot_etc:/etc/letsencrypt \
     -v certbot_var:/var/lib/letsencrypt \
     -v html:/usr/share/nginx/html \
     -v /home/dock/letsencrypt-docker/nginx_conf:/etc/nginx/conf.d \
-    nginx:1.23.3
+    nginx:1.23.3; echo $?)
+
+echo ${nginx_status}
+
+if ${nginx_status};
+then
+    echo "nginx service failed"
+    exit 1
+fi
 
 # Pause here until http://worldpeace.cloud responses with 200.
 until [[ $(domain_response_code) -eq 200 ]]; do
