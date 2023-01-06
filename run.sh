@@ -82,8 +82,8 @@ fi
 docker stop ${nginx_cont} 
 
 # Swap over the basic nginx conf for the https conf.
-# rm ./nginx_conf/nginx.conf
-# cp ./nginx-https.conf ./nginx_conf/nginx.conf
+rm ./nginx_conf/nginx.conf
+cp ./nginx-https.conf ./nginx_conf/nginx.conf
 
 # Should probably start nginx here!!!
 # Restart nginx using the https conf. 
