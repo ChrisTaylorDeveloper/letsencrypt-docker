@@ -21,13 +21,13 @@ docker volume rm $(docker volume ls -q)
 
 # Create Docker Volumes.
 docker volume create certbot_var
-# docker volume create \
-#     --driver local \
-#     -o type=none \
-#     -o o=bind \
-#     -o device=bind \
-#   sshvolume
 
+docker volume create \
+    --driver local \
+    -o type=none \
+    -o o=bind \
+    -o device=/home/dock/letsencrypt-docker/certbot_etc \
+    certbot_etc
 
 # Run nginx for the first time and exit if there was a problem.
 # if ! $(docker-compose up --build -d nginx);
