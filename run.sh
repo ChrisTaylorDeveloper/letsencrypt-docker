@@ -86,13 +86,12 @@ then
     exit 1
 fi
 
-# Should probably stop nginx here
+# Stop nginx.
 docker stop ${nginx_cont} 
 
 # Swap over the basic nginx conf for the https conf.
 rm ./nginx_conf/nginx.conf
 cp ./nginx-https.conf ./nginx_conf/nginx.conf
 
-# Should probably start nginx here!!!
-# Restart nginx using the https conf. 
-# docker-compose restart nginx
+# Start nginx.
+nginx_up
