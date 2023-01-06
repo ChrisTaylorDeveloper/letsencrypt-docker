@@ -52,16 +52,16 @@ nginx_cont=$(docker run --name nginx -d \
     -v /home/dock/letsencrypt-docker/nginx_conf:/etc/nginx/conf.d \
     nginx:1.23.3)
 nginx_status=$(docker inspect "${nginx_cont}" --format='{{.State.ExitCode}}')
-if [[ "${nginx_status}" -ne 10 ]];
+if [[ "${nginx_status}" -ne 0 ]];
 then
     echo "nginx service failed"
     exit 1
 fi
 
 # Pause here until http://worldpeace.cloud responses with 200.
-# until [[ $(domain_response_code) -eq 200 ]]; do
-#     sleep 2
-# done
+until [[ $(domain_response_code) -eq 200 ]]; do
+    sleep 2
+done
 
 # Run certbot service for the first time.
 # certbot_status=$(docker run --name certbot -d \
