@@ -12,8 +12,8 @@ docker-compose down
 echo $1 | sudo -S git clean -fd
 git checkout -- .
 
-# Clean up dirs.
-#mkdir ${VOLUME_CERTBOT_ETC}
+# Make dir need later on.
+mkdir /home/dock/letsencrypt-docker/certbot_etc
 
 # Clean up docker.
 docker system prune -a --force
