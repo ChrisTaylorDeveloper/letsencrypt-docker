@@ -64,7 +64,7 @@ docker volume create \
     dhparam 
 
 # Run nginx for the first time.
-nginx_cont=$(nginx_up())
+nginx_cont=$(nginx_up)
 nginx_status=$(docker inspect "${nginx_cont}" --format='{{.State.ExitCode}}')
 if [[ "${nginx_status}" -ne 0 ]];
 then
@@ -78,7 +78,7 @@ until [[ $(domain_response_code) -eq 200 ]]; do
 done
 
 # Run certbot service for the first time.
-certbot_cont=$(certbot_up())
+certbot_cont=$(certbot_up)
 certbot_status=$(docker inspect "${certbot_cont}" --format='{{.State.ExitCode}}')
 if [[ "${certbot_status}" -ne 0 ]];
 then
