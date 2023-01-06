@@ -53,7 +53,7 @@ nginx_cont=$(docker run --name nginx -d \
     nginx:1.23.3; echo $?)
 
 nginx_status=$(docker inspect ${nginx_cont} --format='{{.State.ExitCode}}')
-echo nginx_status
+echo ${nginx_status}
 
 # if ${nginx_status} != 0;
 # then
