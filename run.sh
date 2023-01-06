@@ -6,13 +6,13 @@ function domain_response_code () {
 }
 
 # Cleanup Docker.
-docker stop $(docker ps -aq)
-docker rm $(docker ps -aq)
-docker volume rm $(docker volume ls -q)
+docker stop "$(docker ps -aq)"
+docker rm "$(docker ps -aq)"
+docker volume rm "$(docker volume ls -q)"
 docker system prune -a --force
 
 # Cleanup git.
-echo $1 | sudo -S git clean -fd
+echo "$1" | sudo -S git clean -fd
 git checkout -- .
 
 # Make dir needed later on.
@@ -51,7 +51,7 @@ nginx_cont=$(docker run --name nginx -d \
     -v html:/usr/share/nginx/html \
     -v /home/dock/letsencrypt-docker/nginx_conf:/etc/nginx/conf.d \
     nginx:1.23.3)
-nginx_status=$(docker inspect ${nginx_cont} --format='{{.State.ExitCode}}')
+nginx_status=$(docker inspect "${nginx_cont}" --format='{{.State.ExitCode}}')
 if ${nginx_status} != 10;
 then
     echo "nginx service failed"
