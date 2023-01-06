@@ -29,6 +29,20 @@ docker volume create \
     -o device=/home/dock/letsencrypt-docker/certbot_etc \
     certbot_etc
 
+docker volume create \
+    --driver local \
+    -o type=none \
+    -o o=bind \
+    -o device=/home/dock/letsencrypt-docker/html \
+    html
+
+docker volume create \
+    --driver local \
+    -o type=none \
+    -o o=bind \
+    -o device=/home/dock/letsencrypt-docker/dhparam \
+    dhparam 
+
 # Run nginx for the first time and exit if there was a problem.
 # if ! $(docker-compose up --build -d nginx);
 # then

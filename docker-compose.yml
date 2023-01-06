@@ -20,13 +20,13 @@ services:
 
 volumes:
     DONE certbot_var:
-    certbot_etc:
+    DONE certbot_etc:
         driver: local
         driver_opts:
             type: none
             device: ${VOLUME_CERTBOT_ETC}
             o: bind
-    html:
+    DONE html:
         driver: local
         driver_opts:
             type: none
