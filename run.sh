@@ -42,13 +42,10 @@ docker volume create \
     -o device=/home/dock/letsencrypt-docker/dhparam \
     dhparam 
 
-# Run nginx for the first time and exit if there was a problem.
-# if ! $(docker-compose up --build -d nginx);
-# then
-#     echo "nginx service failed"
-#     exit 1
-# fi
+# Run nginx for the first time.
 docker run --name nginx -d \
+    -p "80:80" \
+    -p "443:443" \
     -v certbot_etc:/etc/letsencrypt \
     -v certbot_var:/var/lib/letsencrypt \
     -v html:/usr/share/nginx/html \
