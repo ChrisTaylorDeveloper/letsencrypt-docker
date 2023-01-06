@@ -88,6 +88,7 @@ fi
 
 # Stop nginx.
 docker stop ${nginx_cont} 
+docker rm ${nginx_cont} 
 
 # Swap over the basic nginx conf for the https conf.
 rm ./nginx_conf/nginx.conf
