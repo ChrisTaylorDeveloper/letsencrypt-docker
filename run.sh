@@ -52,7 +52,7 @@ nginx_cont=$(docker run --name nginx -d \
     -v /home/dock/letsencrypt-docker/nginx_conf:/etc/nginx/conf.d \
     nginx:1.23.3)
 nginx_status=$(docker inspect ${nginx_cont} --format='{{.State.ExitCode}}')
-if ${nginx_status} -ne 10;
+if ${nginx_status} != 10;
 then
     echo "nginx service failed"
     exit 1
