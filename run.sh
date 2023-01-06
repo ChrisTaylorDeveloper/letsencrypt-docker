@@ -62,7 +62,7 @@ docker run --name certbot -d \
     -v certbot_var:/var/lib/letsencrypt \
     -v html:/var/www/html \
     -v dhparam:/etc/ssl/certs \
-    certbot\certbot \
+    certbot/certbot \
     certonly --webroot --webroot-path=/var/www/html --email chris@christaylordeveloper.co.uk --agree-tos --no-eff-email --force-renewal -d worldpeace.cloud --staging --break-my-certs
 
 # Run certbot and exit if there was a problem.
