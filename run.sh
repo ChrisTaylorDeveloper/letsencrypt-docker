@@ -37,17 +37,19 @@ echo "$1" | sudo -S git clean -fd
 git checkout -- .
 
 # Make dir needed later on.
-mkdir /home/dock/letsencrypt-docker/certbot_etc
+# mkdir /home/dock/letsencrypt-docker/certbot_etc
 
 # Create Docker Volumes.
 docker volume create certbot_var
 
-docker volume create \
-    --driver local \
-    -o type=none \
-    -o o=bind \
-    -o device=/home/dock/letsencrypt-docker/certbot_etc \
-    certbot_etc
+docker volume create certbot_etc
+
+# docker volume create \
+#     --driver local \
+#     -o type=none \
+#     -o o=bind \
+#     -o device=/home/dock/letsencrypt-docker/certbot_etc \
+#     certbot_etc
 
 docker volume create \
     --driver local \
@@ -87,7 +89,7 @@ then
 fi
 
 # Stop nginx.
-# docker stop ${nginx_cont} 
+# docker stop ${nginx_cont}   !!!! this destroys everything
 # docker rm ${nginx_cont} 
 
 # Swap over the basic nginx conf for the https conf.
