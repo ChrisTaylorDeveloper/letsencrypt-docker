@@ -72,13 +72,14 @@ certbot_cont=$(docker run --name certbot -d \
     certbot/certbot \
     certonly --webroot --webroot-path=/var/www/html --email chris@christaylordeveloper.co.uk --agree-tos --no-eff-email --force-renewal -d worldpeace.cloud --staging --break-my-certs)
 certbot_status=$(docker inspect "${certbot_cont}" --format='{{.State.ExitCode}}')
-if [[ "${certbot_status}" -ne 10 ]];
+if [[ "${certbot_status}" -ne 0 ]];
 then
     echo "certbot service failed"
     exit 1
 fi
 
 # Should probably stop nginx here
+docker stop ${nginx_cont} 
 
 # Swap over the basic nginx conf for the https conf.
 # rm ./nginx_conf/nginx.conf
