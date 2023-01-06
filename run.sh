@@ -5,19 +5,18 @@ function domain_response_code () {
         --write-out '%{http_code}' -s -S http://worldpeace.cloud)"
 }
 
-# Start with Containers shutdown.
-docker-compose down
+# Cleanup Docker.
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+docker volume rm $(docker volume ls -q)
+docker system prune -a --force
 
 # Cleanup git.
 echo $1 | sudo -S git clean -fd
 git checkout -- .
 
-# Make dir need later on.
+# Make dir needed later on.
 mkdir /home/dock/letsencrypt-docker/certbot_etc
-
-# Clean up docker.
-docker system prune -a --force
-docker volume rm $(docker volume ls -q)
 
 # Create Docker Volumes.
 docker volume create certbot_var
