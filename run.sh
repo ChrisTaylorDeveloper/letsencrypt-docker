@@ -53,10 +53,10 @@ nginx_status = $(docker run --name nginx -d \
     -v certbot_etc:/etc/letsencrypt \
     -v certbot_var:/var/lib/letsencrypt \
     -v html:/usr/share/nginx/html \
-    -v ./nginx_conf:/etc/nginx/conf.d \
+    -v /home/dock/letsencrypt-docker/nginx_conf:/etc/nginx/conf.d \
     nginx:1.23.3)
 
-echo nginx_status
+echo ${nginx_status}
 
 # Pause here until http://worldpeace.cloud responses with 200.
 # until [[ $(domain_response_code) -eq 200 ]]; do
