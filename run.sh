@@ -5,7 +5,7 @@ function domain_response_code () {
         --write-out '%{http_code}' -s -S http://worldpeace.cloud
 }
 
-function nginx_up () {
+function nginx_up {
     docker run --name nginx -d \
     -p "80:80" \
     -p "443:443" \
@@ -16,7 +16,7 @@ function nginx_up () {
     nginx:1.23.3
 }
 
-function certbot_up () {
+function certbot_up {
     docker run --name certbot -d \
     -v certbot_etc:/etc/letsencrypt \
     -v certbot_var:/var/lib/letsencrypt \
@@ -24,6 +24,11 @@ function certbot_up () {
     -v dhparam:/etc/ssl/certs \
     certbot/certbot \
     certonly --webroot --webroot-path=/var/www/html --email chris@christaylordeveloper.co.uk --agree-tos --no-eff-email --force-renewal -d worldpeace.cloud --staging --break-my-certs
+}
+
+
+function service_exit_code {
+    docker inspect "$1" --format='{{.State.ExitCode}}'
 }
 
 # Cleanup Docker.
@@ -67,20 +72,15 @@ docker volume create \
     -o device=/home/dock/letsencrypt-docker/dhparam \
     dhparam 
 
-exit 0
-
 # Run nginx for the first time.
-nginx_cont=nginx_up
-# nginx_status=$(docker inspect "${nginx_cont}" --format='{{.State.ExitCode}}')
-# if [[ "${nginx_status}" -ne 0 ]];
-# then
-#     echo "nginx service failed"
-#     exit 1
-# fi
+nginx_cont=$(nginx_up)
+until [[ $(service_exit_code "${nginx_cont}") -eq 0 ]]; do
+    sleep 3
+done
 
 # Pause here until http://worldpeace.cloud responses with 200.
 # until [[ $(domain_response_code) -eq 200 ]]; do
-#     sleep 2
+#     sleep 3
 # done
 
 # Run certbot service.
