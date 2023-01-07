@@ -90,7 +90,7 @@ until [[ $(service_exit_code "${certbot_cont}") -eq 0 ]]; do
 done
 
 # Stop nginx.
-# docker stop ${nginx_cont}
+docker stop ${nginx_cont}
 # docker rm ${nginx_cont} 
 
 # Swap over the basic nginx conf for the https conf.
