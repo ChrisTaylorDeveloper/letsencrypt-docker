@@ -39,9 +39,13 @@ then
     docker rm ${docker_list}
 fi
 
+vols_list=$(docker volume ls -q)
+if [[ -n ${vols_list} ]];
+then
+    docker volume rm vols_list
+fi
 exit 0
 
-docker volume rm $(docker volume ls -q)
 docker system prune -a --force
 
 # Cleanup git.
