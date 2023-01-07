@@ -45,9 +45,9 @@ then
     docker volume rm ${vols_list}
 fi
 
-exit 0
-
 docker system prune -a --force
+
+exit 0
 
 # Cleanup git.
 echo "$1" | sudo -S git clean -fd
