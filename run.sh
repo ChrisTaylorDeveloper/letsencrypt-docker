@@ -84,13 +84,10 @@ until [[ $(domain_response_code) -eq 200 ]]; do
 done
 
 # Run certbot service.
-# certbot_cont=$(certbot_up)
-# certbot_status=$(docker inspect "${certbot_cont}" --format='{{.State.ExitCode}}')
-# if [[ "${certbot_status}" -ne 0 ]];
-# then
-#     echo "certbot service failed"
-#     exit 1
-# fi
+certbot_cont=$(certbot_up)
+until [[ $(service_exit_code "${certbot_cont}") -eq 10 ]]; do
+    sleep 3
+done
 
 # Stop nginx.
 # docker stop ${nginx_cont}
