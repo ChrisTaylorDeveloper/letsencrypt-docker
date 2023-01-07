@@ -47,11 +47,11 @@ fi
 
 docker system prune -a --force
 
-exit 0
-
 # Cleanup git.
 echo "$1" | sudo -S git clean -fd
 git checkout -- .
+
+exit 0
 
 # Create Docker Volumes.
 docker volume create certbot_var
