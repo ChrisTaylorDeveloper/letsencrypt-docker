@@ -27,6 +27,10 @@ function certbot_up () {
 }
 
 # Cleanup Docker.
+docker_list=$(docker ps -aq)
+echo ${docker_list}
+exit 0
+
 docker stop $(docker ps -aq)
 docker rm $(docker ps -aq)
 docker volume rm $(docker volume ls -q)
