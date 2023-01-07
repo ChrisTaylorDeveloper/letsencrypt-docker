@@ -51,8 +51,6 @@ docker system prune -a --force
 echo "$1" | sudo -S git clean -fd
 git checkout -- .
 
-exit 0
-
 # Create Docker Volumes.
 docker volume create certbot_var
 docker volume create certbot_etc
@@ -68,6 +66,8 @@ docker volume create \
     -o o=bind \
     -o device=/home/dock/letsencrypt-docker/dhparam \
     dhparam 
+
+exit 0
 
 # Run nginx for the first time.
 nginx_cont=nginx_up
