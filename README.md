@@ -2,10 +2,7 @@
 
 ## Example usage
 ```
-export CERTBOT_DOCKER_PRUNE=1; \
-export CERTBOT_DOCKER_VOLS_REMOVE=1; \
-export VOLUME_CERTBOT_ETC=/home/dock/letsencrypt-docker/certbot_etc; \
-./run.sh <sudo password>
+...
 ```
 
 ## Resources
