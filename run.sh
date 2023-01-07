@@ -74,14 +74,14 @@ docker volume create \
 
 # Run nginx for the first time.
 nginx_cont=$(nginx_up)
-until [[ $(service_exit_code "${nginx_cont}") -eq 4 ]]; do
+until [[ $(service_exit_code "${nginx_cont}") -eq 0 ]]; do
     sleep 3
 done
 
 # Pause here until http://worldpeace.cloud responses with 200.
-# until [[ $(domain_response_code) -eq 200 ]]; do
-#     sleep 3
-# done
+until [[ $(domain_response_code) -eq 200 ]]; do
+    sleep 3
+done
 
 # Run certbot service.
 # certbot_cont=$(certbot_up)
