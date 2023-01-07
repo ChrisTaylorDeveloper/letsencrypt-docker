@@ -28,17 +28,19 @@ function certbot_up () {
 
 # Cleanup Docker.
 docker_list=$(docker ps -aq)
-echo ${docker_list}
 if [[ -n ${docker_list} ]];
 then
-    # docker stop $(docker ps -aq)
-    echo "foo"
-else
-    echo "bar"
+    docker stop ${docker_list}
 fi
+
+docker_list=$(docker ps -aq)
+if [[ -n ${docker_list} ]];
+then
+    docker rm ${docker_list}
+fi
+
 exit 0
 
-docker rm $(docker ps -aq)
 docker volume rm $(docker volume ls -q)
 docker system prune -a --force
 
