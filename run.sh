@@ -9,7 +9,7 @@ function nginx_up () {
     docker run --name nginx -d \
     -p "80:80" \
     -p "443:443" \
-    -v /home/dock/letsencrypt-docker/certbot_etc:/etc/letsencrypt \
+    -v certbot_etc:/etc/letsencrypt \
     -v certbot_var:/var/lib/letsencrypt \
     -v html:/usr/share/nginx/html \
     -v /home/dock/letsencrypt-docker/nginx_conf:/etc/nginx/conf.d \
@@ -18,7 +18,7 @@ function nginx_up () {
 
 function certbot_up () {
     docker run --name certbot -d \
-    -v /home/dock/letsencrypt-docker/certbot_etc:/etc/letsencrypt \
+    -v certbot_etc:/etc/letsencrypt \
     -v certbot_var:/var/lib/letsencrypt \
     -v html:/var/www/html \
     -v dhparam:/etc/ssl/certs \
@@ -38,14 +38,13 @@ git checkout -- .
 
 # Create Docker Volumes.
 docker volume create certbot_var
-
+docker volume create certbot_etc
 docker volume create \
     --driver local \
     -o type=none \
     -o o=bind \
     -o device=/home/dock/letsencrypt-docker/html \
     html
-
 docker volume create \
     --driver local \
     -o type=none \
@@ -77,7 +76,7 @@ then
 fi
 
 # Stop nginx.
-docker stop ${nginx_cont}
+# docker stop ${nginx_cont}
 # docker rm ${nginx_cont} 
 
 # Swap over the basic nginx conf for the https conf.
