@@ -42,8 +42,9 @@ fi
 vols_list=$(docker volume ls -q)
 if [[ -n ${vols_list} ]];
 then
-    docker volume rm vols_list
+    docker volume rm ${vols_list}
 fi
+
 exit 0
 
 docker system prune -a --force
