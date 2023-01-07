@@ -85,7 +85,7 @@ done
 
 # Run certbot service.
 certbot_cont=$(certbot_up)
-until [[ $(service_exit_code "${certbot_cont}") -eq 10 ]]; do
+until [[ $(service_exit_code "${certbot_cont}") -eq 0 ]]; do
     sleep 3
 done
 
