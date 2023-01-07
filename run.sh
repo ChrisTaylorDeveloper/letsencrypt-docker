@@ -53,27 +53,27 @@ docker volume create \
     dhparam 
 
 # Run nginx for the first time.
-nginx_cont=$(nginx_up)
-nginx_status=$(docker inspect "${nginx_cont}" --format='{{.State.ExitCode}}')
-if [[ "${nginx_status}" -ne 0 ]];
-then
-    echo "nginx service failed"
-    exit 1
-fi
+nginx_cont=nginx_up
+# nginx_status=$(docker inspect "${nginx_cont}" --format='{{.State.ExitCode}}')
+# if [[ "${nginx_status}" -ne 0 ]];
+# then
+#     echo "nginx service failed"
+#     exit 1
+# fi
 
 # Pause here until http://worldpeace.cloud responses with 200.
-until [[ $(domain_response_code) -eq 200 ]]; do
-    sleep 2
-done
+# until [[ $(domain_response_code) -eq 200 ]]; do
+#     sleep 2
+# done
 
-# Run certbot service for the first time.
-certbot_cont=$(certbot_up)
-certbot_status=$(docker inspect "${certbot_cont}" --format='{{.State.ExitCode}}')
-if [[ "${certbot_status}" -ne 0 ]];
-then
-    echo "certbot service failed"
-    exit 1
-fi
+# Run certbot service.
+# certbot_cont=$(certbot_up)
+# certbot_status=$(docker inspect "${certbot_cont}" --format='{{.State.ExitCode}}')
+# if [[ "${certbot_status}" -ne 0 ]];
+# then
+#     echo "certbot service failed"
+#     exit 1
+# fi
 
 # Stop nginx.
 # docker stop ${nginx_cont}
