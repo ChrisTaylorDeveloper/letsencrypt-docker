@@ -27,9 +27,9 @@ function certbot_up () {
 }
 
 # Cleanup Docker.
-docker stop "$(docker ps -aq)"
-docker rm "$(docker ps -aq)"
-docker volume rm "$(docker volume ls -q)"
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+docker volume rm $(docker volume ls -q)
 docker system prune -a --force
 
 # Cleanup git.
