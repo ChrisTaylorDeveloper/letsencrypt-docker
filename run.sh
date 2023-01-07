@@ -74,7 +74,7 @@ docker volume create \
 
 # Run nginx for the first time.
 nginx_cont=$(nginx_up)
-until [[ $(service_exit_code "${nginx_cont}") -eq 0 ]]; do
+until [[ $(service_exit_code "${nginx_cont}") -eq 4 ]]; do
     sleep 3
 done
 
