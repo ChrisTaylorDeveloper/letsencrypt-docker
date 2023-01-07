@@ -77,12 +77,12 @@ then
 fi
 
 # Stop nginx.
-docker stop ${nginx_cont}
-docker rm ${nginx_cont} 
+# docker stop ${nginx_cont}
+# docker rm ${nginx_cont} 
 
 # Swap over the basic nginx conf for the https conf.
-rm ./nginx_conf/nginx.conf
-cp ./nginx-https.conf ./nginx_conf/nginx.conf
+# rm ./nginx_conf/nginx.conf
+# cp ./nginx-https.conf ./nginx_conf/nginx.conf
 
 # Start nginx.
-nginx_up
+# nginx_up
